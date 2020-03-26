@@ -1,4 +1,5 @@
 import React from 'react'
+// import {withRouter} from 'react-router-dom'
 class ItemForm extends React.Component{
 
   state={
@@ -26,6 +27,7 @@ class ItemForm extends React.Component{
       .then(res => res.json())
       .then(item => {
         this.props.addToItems(item)
+        this.props.history.push('/items')
       })
   }
 

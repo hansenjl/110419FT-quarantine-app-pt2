@@ -1,9 +1,13 @@
 import React from 'react';
+import {Switch, Route} from 'react-router-dom'
 import './App.css';
 
 import Header from './Header'
 import ItemsContainer from './ItemsContainer'
 import CartContainer from './CartContainer'
+import ItemForm from './ItemForm'
+import ItemShow from './ItemShow'
+
 
 
 class App extends React.Component {
@@ -15,17 +19,16 @@ class App extends React.Component {
   }
 
   state = {
-    page: "Items",
     items: [],
     cart: [],
     term: ""
   }
 
-  changeView = (page) => {
-    console.log(this);
-    //this.setState({page: "Cart"})
-    this.setState({page})
-  }
+  // changeView = (page) => {
+  //   console.log(this);
+  //   //this.setState({page: "Cart"})
+  //   this.setState({page})
+  // }
 
   addToCart = (id) => {
     let item = this.state.items.find(item => item.id === id)
@@ -46,9 +49,13 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header changeView={this.changeView}/>
-
-          { this.state.page === 'Items' ? <ItemsContainer addToCart={this.addToCart} cart={this.state.cart} items={this.state.items}  /> : <CartContainer cart={this.state.cart}/>}
-
+        <Switch>
+          <Route exact path='/items' component={() => <ItemsContainer addToCart={this.addToCart} cart={this.state.cart} items={this.state.items}  />} />
+          <Route path='/cart' component={() => <CartContainer cart={this.state.cart}/>}/>
+          <Route exact path='/items/new' render={() => <ItemForm addToItems={this.addToItems}/>} />
+          <Route exact path='/items/:id' component={({match} ) => <ItemShow items={this.state.items} match={match} id={match.params.id}/>}/>
+          <Route exact path="/" render={()=><h1>Welcome!</h1>}/>
+        </Switch>
 
       </div>
     )};
