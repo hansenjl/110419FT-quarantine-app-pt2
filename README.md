@@ -14,10 +14,6 @@
   * Use `match` to access the url params or page path
   * Render just one item when a user navigates to '/items/:id'
 
-  * When the image of an item is clicked, it will show the second image
-  * Perform the filter and preserve state correctly
-  * When we click the New Item button, change the view to the form
-  * When we click on the name of an Item, show a View Page for the Item
 
 # Setup
 
