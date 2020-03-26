@@ -4,18 +4,8 @@ import { Link } from "react-router-dom";
 function Header(props){
   return(
     <div id="header">
-      <h1>Quarantine Shopping</h1>
-      <nav>
-        <button>
-          <Link to="/">Home</Link>
-        </button>
-        <button>
-          <Link to="/cart">Cart</Link>
-        </button>
-        <button>
-          <Link to="/items/new">Add Item</Link>
-        </button>
-      </nav>
+      <h1 onClick={(e) => props.changeView("Items")}>Quarantine Shopping</h1>
+      <button onClick={(e) => props.changeView("Cart")}> View Cart</button>
     </div>
   )
 }
