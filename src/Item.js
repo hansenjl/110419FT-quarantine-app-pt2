@@ -11,15 +11,17 @@ class Item extends Component{
     console.log("UPDATED!")
   }
 
+  
+
   render(){
     return(
-      <div className="item" id={this.props.name + "-item"}>
-        <h3>{this.props.name}</h3>
-        <img alt={this.props.name + " image"}src={this.props.image1}/>
+      <div className="item" id={this.props.item.name + "-item"}>
+        <h3>{this.props.item.name}</h3>
+        <img alt={this.props.item.name + " image"}src={this.props.item.image1}/>
         <br/>
-        Price: {this.props.price}
+        Price: {this.props.item.price}
         <br/>
-        {!this.props.isInCart && <button onClick={(e) => this.props.addToCart(this.props.id)}>Add To Cart</button>}
+        {!this.props.isInCart && <button onClick={(e) => this.props.addToCart(this.props.item.id)}>Add To Cart</button>}
       </div>
     )
   }

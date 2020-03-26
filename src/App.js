@@ -1,10 +1,13 @@
 import React from 'react';
+import { Switch, Route, Link } from "react-router-dom";
 
 import './App.css';
 
 import Header from './Header'
 import ItemsContainer from './ItemsContainer'
 import CartContainer from './CartContainer'
+import Item from './Item'
+import ItemForm from './ItemForm'
 
 class App extends React.Component {
 
@@ -13,10 +16,6 @@ class App extends React.Component {
       .then(res => res.json())
       .then(items => this.setState({items}))
   }
-
-  //let items = [{...}, {...}]
-  //let obj = {items: items}
-  //let obj = {items}
 
   state = {
     page: "Items",
@@ -38,11 +37,26 @@ class App extends React.Component {
     }, () => console.log(this.state))
   }
 
+  addToItems = (item) => {
+    this.setState(prevState => {
+      return ({items: [...prevState.items, item]})
+    })
+  }
+
+
+
   render(){
     return (
       <div className="App">
         <Header changeView={this.changeView}/>
-        {this.state.page === "Items" ? <ItemsContainer addToCart={this.addToCart} cart={this.state.cart} items={this.state.items}/> : <CartContainer cart={this.state.cart}/>}
+
+          <Route path="/cart" component={() => <CartContainer cart={this.state.cart}/>}/>
+          <Route path="/items/new" component={() => <ItemForm addToItems={this.addToItems} />}/>
+
+          {/* //below will not work */}
+          <Route path="/items/:id" render={({match}) =>  <Item id={match.params.id} addToCart={this.addToCart} />}/>
+          <Route path="/" component={() => <ItemsContainer addToCart={this.addToCart} cart={this.state.cart} items={this.state.items}  />}/>
+
 
       </div>
     )};
