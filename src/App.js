@@ -21,7 +21,8 @@ class App extends React.Component {
     page: "Items",
     items: [],
     cart: [],
-    term: ""
+    term: "",
+    item: null
   }
 
   changeView = (page) => {
@@ -43,21 +44,26 @@ class App extends React.Component {
     })
   }
 
+  findItem = (id) => {
+    fetch(`http://localhost:3000/items/${id}`)
+      .then(res => res.json())
+      .then(item => this.setState({item: item}))
+  }
+
 
 
   render(){
     return (
       <div className="App">
         <Header changeView={this.changeView}/>
-
+        <Switch>
           <Route path="/cart" component={() => <CartContainer cart={this.state.cart}/>}/>
           <Route path="/items/new" component={() => <ItemForm addToItems={this.addToItems} />}/>
 
           {/* //below will not work */}
-          <Route path="/items/:id" render={({match}) =>  <Item id={match.params.id} addToCart={this.addToCart} />}/>
+          <Route path="/items/:id" render={({match}) =>  <Item id={match.params.id} findItem={this.findItem} item={this.state.item} addToCart={this.addToCart} />}/>
           <Route path="/" component={() => <ItemsContainer addToCart={this.addToCart} cart={this.state.cart} items={this.state.items}  />}/>
-
-
+        </Switch>
       </div>
     )};
 }

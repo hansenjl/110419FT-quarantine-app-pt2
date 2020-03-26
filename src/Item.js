@@ -4,16 +4,14 @@ class Item extends Component{
 
   shouldComponentUpdate(nextProps, nextState){
     console.log("Checking if component should update");
-    return nextProps.isInCart !== this.props.isInCart
+    return nextProps.isInCart !== this.props.isInCart || nextProps.item !== this.props.item
   }
 
   componentDidUpdate(){
     console.log("UPDATED!")
   }
 
-  
-
-  render(){
+  renderItem = () =>{
     return(
       <div className="item" id={this.props.item.name + "-item"}>
         <h3>{this.props.item.name}</h3>
@@ -22,6 +20,30 @@ class Item extends Component{
         Price: {this.props.item.price}
         <br/>
         {!this.props.isInCart && <button onClick={(e) => this.props.addToCart(this.props.item.id)}>Add To Cart</button>}
+      </div>
+    )
+  }
+
+  renderNotFound = () =>{
+    return(
+      <div className="item" >
+        LOADING
+      </div>
+    )
+  }
+
+  componentDidMount(){
+    if(!this.props.item){
+      this.props.findItem(this.props.id)
+    }
+  }
+
+
+
+  render(){
+    return(
+      <div>
+       {this.props.item ? this.renderItem() : this.renderNotFound() }
       </div>
     )
   }
