@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 import Countdown from './Countdown'
 
@@ -8,10 +9,11 @@ function CartContainer(props){
     return props.cart.map(item => {
       return (
         <div key={item.id}>
-        Item: {item.name}
-        <br/>
-        Price: {item.price}
-        <br/>
+
+          Item:  <Link to={'/items/' + item.id} >{item.name}</Link>
+          <br/>
+          Price: {item.price}
+          <br/>
         </div>
       )})
     }
